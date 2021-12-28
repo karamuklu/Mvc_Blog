@@ -1,0 +1,94 @@
+﻿@model MVC_Blog_Uygulama.Models.Blog
+
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="container">
+    <h2>Blog Güncelle</h2>
+
+    <form action="Edit" method="post" enctype="multipart/form-data">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Baslik, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Baslik, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Baslik, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Aciklama, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Icerik, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Icerik, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Icerik, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Resim, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="yuklenecekResim" accept=".jpg,.png,.jpeg" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Resim, "Lütfen resim seçiniz", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Onay, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Onay)
+                        @Html.ValidationMessageFor(model => model.Onay, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Anasayfa, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Anasayfa)
+                        @Html.ValidationMessageFor(model => model.Anasayfa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.KategoriID, "KategoriID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("KategoriID", null, "Kategori Seçiniz", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.KategoriID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Kaydet" class="btn btn-warning" />
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div>
+        @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-primary" })
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

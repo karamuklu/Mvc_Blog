@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Blog_UygulamaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Baslik" Type="nvarchar(max)" />
+          <Property Name="Aciklama" Type="nvarchar(max)" />
+          <Property Name="Icerik" Type="nvarchar(max)" />
+          <Property Name="Resim" Type="nvarchar(max)" />
+          <Property Name="Onay" Type="bit" Nullable="false" />
+          <Property Name="Anasayfa" Type="bit" Nullable="false" />
+          <Property Name="EklenmeTarihi" Type="datetime" />
+          <Property Name="KategoriID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KategoriAdi" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Baslik" Type="nvarchar(max)" />
+          <Property Name="Aciklama" Type="nvarchar(max)" />
+          <Property Name="Blog_ID" Type="int" Nullable="false" />
+          <Property Name="Yorum_Tarihi" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Blog_Kategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+          <End Role="Blog" Type="Self.Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="KategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_Blog">
+          <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="Blog_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Blog_UygulamaModelStoreContainer">
+          <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yorum" EntityType="Self.Yorum" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Blog_Kategori" Association="Self.FK_Blog_Kategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_Blog" Association="Self.FK_Yorum_Blog">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Blog_UygulamaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Baslik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Resim" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Onay" Type="Boolean" Nullable="false" />
+          <Property Name="Anasayfa" Type="Boolean" Nullable="false" />
+          <Property Name="EklenmeTarihi" Type="DateTime" Precision="3" />
+          <Property Name="KategoriID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kategori" Relationship="Self.FK_Blog_Kategori" FromRole="Blog" ToRole="Kategori" />
+          <NavigationProperty Name="Yorum" Relationship="Blog_UygulamaModel.FK_Yorum_Blog" FromRole="Blog" ToRole="Yorum" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KategoriAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Blog" Relationship="Self.FK_Blog_Kategori" FromRole="Kategori" ToRole="Blog" />
+        </EntityType>
+        <Association Name="FK_Blog_Kategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="1" />
+          <End Role="Blog" Type="Self.Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="KategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Blog" EntityType="Self.Blog" />
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" />
+          <AssociationSet Name="FK_Blog_Kategori" Association="Self.FK_Blog_Kategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <EntitySet Name="Yorum" EntityType="Blog_UygulamaModel.Yorum" />
+          <AssociationSet Name="FK_Yorum_Blog" Association="Blog_UygulamaModel.FK_Yorum_Blog">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="Blog_UygulamaModel.sysdiagrams" />
+        </EntityContainer>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Baslik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Blog_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Blog" Relationship="Blog_UygulamaModel.FK_Yorum_Blog" FromRole="Yorum" ToRole="Blog" />
+          <Property Name="Yorum_Tarihi" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Yorum_Blog">
+          <End Type="Blog_UygulamaModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="Blog_UygulamaModel.Yorum" Role="Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="Blog_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Blog_UygulamaModelStoreContainer" CdmEntityContainer="BlogEntities">
+          <EntitySetMapping Name="Blog">
+            <EntityTypeMapping TypeName="Blog_UygulamaModel.Blog">
+              <MappingFragment StoreEntitySet="Blog">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Baslik" ColumnName="Baslik" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Icerik" ColumnName="Icerik" />
+                <ScalarProperty Name="Resim" ColumnName="Resim" />
+                <ScalarProperty Name="Onay" ColumnName="Onay" />
+                <ScalarProperty Name="Anasayfa" ColumnName="Anasayfa" />
+                <ScalarProperty Name="EklenmeTarihi" ColumnName="EklenmeTarihi" />
+                <ScalarProperty Name="KategoriID" ColumnName="KategoriID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategori">
+            <EntityTypeMapping TypeName="Blog_UygulamaModel.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="KategoriAdi" ColumnName="KategoriAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yorum">
+            <EntityTypeMapping TypeName="Blog_UygulamaModel.Yorum">
+              <MappingFragment StoreEntitySet="Yorum">
+                <ScalarProperty Name="Yorum_Tarihi" ColumnName="Yorum_Tarihi" />
+                <ScalarProperty Name="Blog_ID" ColumnName="Blog_ID" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Baslik" ColumnName="Baslik" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Blog_UygulamaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

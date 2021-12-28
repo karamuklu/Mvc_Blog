@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MVC_Blog_Uygulama.Models.BlogModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Blog Listesi</h2>
+
+<div class="row">
+
+    @foreach (var blog in Model)
+    {
+        <div class="blog">
+            <h3 class="page-header">
+                @blog.Baslik
+            </h3>
+            <p>
+                <span class="glyphicon glyphicon-time"></span>
+                @blog.EklenmeTarihi
+            </p>
+            <hr />
+            <img class="img-responsive" src="http://via.placeholder.com/900x300" />
+            <hr />
+
+            <p>
+                @blog.Aciklama
+            </p>
+            @Html.ActionLink("Daha Fazla...", "Details", "Blog", new { id = @blog.ID }, new { @class = "btn btn-primary" })
+
+        </div>
+    }
+
+</div>
+
+@section SagKolon{
+    <div class="well">
+        <h4>Blog Search</h4>
+        <div class=" input-group">
+            <input type="text" class="form-control" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </div>
+
+    @{Html.RenderAction("KategoriListesi", "Kategori");}
+}
+

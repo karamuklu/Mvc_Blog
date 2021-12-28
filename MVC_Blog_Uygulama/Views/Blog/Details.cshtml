@@ -1,0 +1,86 @@
+﻿@model MVC_Blog_Uygulama.Models.Blog_Yorum
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1>@Model.Blog.Baslik</h1>
+<hr />
+<p>
+    <span class="glyphicon glyphicon-time"></span>
+    @Model.Blog.EklenmeTarihi
+</p>
+<hr />
+<img class="img-responsive img-rounded" src="/img/@Model.Blog.Resim" alt="" />
+<hr />
+<blockquote>
+    <p>
+        @Model.Blog.Aciklama
+    </p>
+</blockquote>
+<p>
+    @Model.Blog.Icerik
+</p>
+<hr />
+
+
+<div class="panel panel-default" id="YorumBolumu">
+    <form action="/Blog/YorumEkle/@Model.Blog.ID" method="post">
+        <div class="panel-heading">
+            <h3 class="panel-title">Yorum Yap</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                <input type="text" name="YorumBaslik" placeholder="Başlık" class="form-control" />
+            </p>
+            <p class="text-right">
+                <textarea name="YorumIcerik" placeholder="Yorum Giriniz" class="form-control" rows="3"> </textarea>
+            </p>
+            <input type="submit" value="Kaydet" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+<hr />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">YORUMLAR</h3>
+    </div>
+    <div class="panel-body">
+        <div class="panel panel-default">
+            @foreach (var item in Model.Yorumlar)
+            {
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="panel-title">
+                                @item.Baslik
+                            </h3>
+                        </div>
+                        <div class="col-md-6" style="text-align:right">
+                            <span class="glyphicon glyphicon-time"></span> @item.Yorum_Tarihi
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        @item.Aciklama
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+@section SagKolon{
+
+    @Html.Partial("Search")
+    @{Html.RenderAction("KategoriListesi", "Kategori");}
+
+}
+
+
+
+
+

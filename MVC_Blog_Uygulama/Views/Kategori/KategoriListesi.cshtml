@@ -1,0 +1,48 @@
+﻿@model IEnumerable<MVC_Blog_Uygulama.Models.KategoriModel>
+
+@{
+    var seciliKategori = Url.RequestContext.RouteData.Values["id"];
+    var kategoriiiAdi = Url.RequestContext.RouteData.Values["controller"];
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+
+
+<div class="well">
+    <h4>Blog Kategorileri</h4>
+    <div class="row">
+        <ul class="list-group">
+
+            @foreach (var item in Model)
+            {
+                if (seciliKategori != null)
+                {
+                    if (item.id != int.Parse(seciliKategori.ToString()))
+                    {
+
+                        <a href="/Blog/Liste/@item.id" class="list-group-item ">
+                            <i class="fa fa-angle-double-right" aria-hidden="true"></i> @item.KategoriAdi (@item.BlogSayisi)
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Blog/Liste/@item.id" class="list-group-item active">
+                            <i class="fa fa-angle-double-right" aria-hidden="true"></i> @item.KategoriAdi (@item.BlogSayisi)
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a href="/Blog/Liste/@item.id" class="list-group-item">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i> @item.KategoriAdi (@item.BlogSayisi)
+                    </a>
+                }
+
+            }
+        </ul>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqueryvalunob")
+@Scripts.Render("~/bundles/bootstrap")
